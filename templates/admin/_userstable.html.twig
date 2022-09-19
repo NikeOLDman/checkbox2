@@ -1,0 +1,51 @@
+<div class="checktable">
+
+    <ul class="checktable__table">
+        <li class="checktable__head">
+            <div class="checktable__check usertable-fio"><a class="checktable__link" href="{{ path('orderbyuser', {orderByUserChange: 'uname' }) }}">ФИО</a></div>
+            <div class="checktable__task usertable-login"><a class="checktable__link" href="{{ path('orderbyuser', {orderByUserChange: 'login' }) }}">Логин</a></div>
+            <div class="checktable__create usertable-create"><a class="checktable__link" href="{{ path('orderbyuser', {orderByUserChange: 'createtime' }) }}">Создан</a></div>
+            <div class="checktable__deadline usertable-deleted">Удален</div>
+            <div class="checktable__func"> </div>
+        </li>
+
+        {% for User in usersGrid %}
+            <li class="checktable__row
+            {% if User.deleted == 1 %} checktable__row-checked {% endif %}
+            {% if User.roles[0] == 'ROLE_ADMIN' %} checktable__row-red {% endif %}
+            ">
+                <div class="checktable__check usertable-fio">
+                    <div class="checktable__title">
+                        <a href="{{ path('app_admin_taskstable', {changedUser: User.id }) }}" class="checktable__link">{{ User.uname }}
+                        </a>
+                    </div>
+                </div>
+                <div class="checktable__task usertable-login">
+                    {{ User.username }}
+                </div>
+                <div class="checktable__create usertable-create">{{ User.createtime|date("d-m-Y") }}</div>
+                <div class="checktable__deadline usertable-deleted">{% if User.deleted == 1 %} ДА {% endif %}{% if User.deleted == 0 %} НЕТ {% endif %}</div>
+                <div class="checktable__func">
+                    <div class="hamburger">
+                        <a href="#" class="hamburger__link">
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                    <ul class="funcmenu">
+                        <li class="funcmenu__item">
+                            <a href="{{ path('app_admin', {userEditId: User.id, popuptask: 'changeuser'}) }}" class="funcmenu__link">Изменить</a>
+                        </li>
+                        <li class="funcmenu__item">
+                            {% if User.deleted == 1 %}
+                                <a href="{{ path('app_admin', {userEditId: User.id, popuptask: 'recoveruser'}) }}" class="funcmenu__link">Восстановить</a>
+                            {% endif %}
+                            {% if User.deleted == 0 %}
+                                <a href="{{ path('app_admin', {userEditId: User.id, popuptask: 'deleteuser'}) }}" class="funcmenu__link">Удалить</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

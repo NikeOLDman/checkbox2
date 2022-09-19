@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CheckBox{% endblock %}
+{# {% if is_granted('IS_AUTHENTICATED_FULLY') %} #}
+{% block popuptask %}
+{% if mainpopup != '' %}
+    {{ include(mainpopup) }}
+{% endif %}
+{% endblock %}
+{% block header %}
+<header class="header">
+    <div class="container">
+        <div class="header__block">
+            <div class="header__left">
+                <div class="user">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {{ app.user.uname }}
+                    {% endif %}
+                </div>
+                <ul class="items-count">
+                    <li class="items-count__item">
+                        Активных задач: 
+                            <strong>{{ countActiveTasks }}</strong>
+                        
+                    </li>
+                    <li class="items-count__item">
+                        Приближается Deadline: 
+                            <strong>{{ countDeadlineTasks }}</strong>
+                        
+                    </li>
+                </ul>
+            </div>
+            <div class="header__right"><a href="/logout" class="logout">LogOut</a>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+{% block functions %}
+<div class="functions">
+    <div class="functions__create">
+        <a href="{{ path('app_tasks', {popuptask: 'create'}) }}"
+            class="functions__button functions__button-blue">Создать</a>
+    </div>
+    <div class="functions__filter">
+        <a href="{{ path('tasksfilter', {tasksFilterChange: 'all' }) }}"
+            class="functions__button functions__button-grey {% if tasksFilter == 'all' %} functions__button-greyactive {% endif %}">Все</a>
+        <a href="{{ path('tasksfilter', {tasksFilterChange: 'active' }) }}"
+            class="functions__button functions__button-grey {% if tasksFilter == 'active' %} functions__button-greyactive {% endif %}">Актуальные</a>
+        <a href="{{ path('tasksfilter', {tasksFilterChange: 'close' }) }}"
+            class="functions__button functions__button-grey {% if tasksFilter == 'close' %} functions__button-greyactive {% endif %}">Закрытые</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block checktable %}
+
+{{ include('tasks/_checktable.html.twig') }}
+{% endblock %}
+{# {% endif %} #}
+    {% block javascripts %}
+    <script type="text/javascript" src="js/script.js"></script>
+    {% endblock %}

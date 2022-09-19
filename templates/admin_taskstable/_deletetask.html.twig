@@ -1,0 +1,25 @@
+<div class="blockscreen"></div>
+<div class="mainpopup-wrapper">
+    <div class="mainpopup-left"></div>
+    <div class="mainpopup-right">
+        <div class="mainpopup">
+            <div class="mainpopup__header">Одумайся_</div>
+            <div class="mainpopup__form">
+                <form action="{{ path('admindeletetask') }}" method="post">
+                    <div class="mainpopup__text">
+                        Уверены, что хотите удалить задачу?
+                    </div>
+                    <input type="hidden" id="taskId" name="taskId" value="{{ changedTask.id }}">
+                    <div class="mainpopup__buttons">
+                        <div class="mainpopup__otherbutton">
+                            <a href="{{ path('app_admin_taskstable') }}" class="mainpopup__link">ОТМЕНА</a>
+                        </div>
+                        <div class="mainpopup__button">
+                            <button type="submit" class="mainpopup__submit">УДАЛИТЬ</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

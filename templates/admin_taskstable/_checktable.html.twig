@@ -1,0 +1,63 @@
+<div class="checktable">
+
+    <ul class="checktable__table">
+        <li class="checktable__head">
+            <div class="checktable__check">Чек</div>
+            <div class="checktable__task"><a class="checktable__headtitle"
+                    href="{{ path('adminorderbytask', {orderByTaskChange: 'title' }) }}">Задача</a>
+            </div>
+            <div class="checktable__create"><a class="checktable__headtitle"
+                    href="{{ path('adminorderbytask', {orderByTaskChange: 'createtime' }) }}">Создана</a>
+            </div>
+            <div class="checktable__deadline"><a class="checktable__headtitle"
+                    href="{{ path('adminorderbytask', {orderByTaskChange: 'deadline' }) }}">Deadline</a>
+            </div>
+            <div class="checktable__func"> </div>
+        </li>
+        {% for taskByUser in tasksGridByUser %}
+
+        <li class="checktable__row 
+            {% if taskByUser.checked != null %}
+                checktable__row-checked
+            {% endif %}
+            {% if ((date(taskByUser.deadline) < date('1days')) and (taskByUser.checked == null)) %}
+                checktable__row-red
+            {% endif %}
+            ">
+            <div class="checktable__check">
+                <a href="{{ path('adminchecktask', {taskId: taskByUser.id }) }}" class="checkbutton">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                </a>
+            </div>
+            <div class="checktable__task">
+                <a href="#" class="checktable__link">{{ taskByUser.title }}
+                    {% if taskByUser.checked != null %}
+                    | Выполнено: {{taskByUser.checked|date("d-m-Y")}}
+                    {% endif %}
+
+                    <div class="checktable__title">
+                    </div>
+                </a>
+                <div class="checktable__description">{{ taskByUser.description }}</div>
+            </div>
+            <div class="checktable__create">{{ taskByUser.createtime|date("d-m-Y") }}</div>
+            <div class="checktable__deadline">{{ taskByUser.deadline|date("d-m-Y") }}</div>
+            <div class="checktable__func">
+                <div class="hamburger">
+                    <a href="#" class="hamburger__link">
+                        <i class="fa fa-bars" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <ul class="funcmenu">
+                    <li class="funcmenu__item">
+                        <a href="{{ path('app_admin_taskstable', {taskId: taskByUser.id, popuptask: 'adminchange'}) }}" class="funcmenu__link">Изменить</a>
+                    </li>
+                    <li class="funcmenu__item">
+                        <a href="{{ path('app_admin_taskstable', {taskId: taskByUser.id, popuptask: 'admindelete' }) }}" class="funcmenu__link">Удалить</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

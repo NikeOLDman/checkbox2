@@ -1,0 +1,38 @@
+<div class="blockscreen"></div>
+<div class="mainpopup-wrapper">
+    <div class="mainpopup-left"></div>
+    <div class="mainpopup-right">
+        <div class="mainpopup">
+            <div class="mainpopup__header">Изменить пользователя_</div>
+            <div class="mainpopup__form">
+                <form action="{{ path('changeuser') }}" method="post">
+                    <div class="mainpopup__input">
+                        <label for="txtUser" class="mainpopup__title">LOGIN</label>
+                        <input id="txtUser" type="text" name="login" class="mainpopup__descr" value="{{ changedUser.username }}" />
+                    </div>
+                    <div class="mainpopup__input">
+                        <label for="txtString" class="mainpopup__title">PASS</label>
+                        <input id="txtString" class="mainpopup__descr" type="password" name="pw" />
+                    </div>
+                    <div class="mainpopup__input">
+                        <label for="txtFio" class="mainpopup__title">Name</label>
+                        <input id="txtFio" type="text" name="uname" class="mainpopup__descr" value="{{ changedUser.uname }}" />
+                    </div>
+                    <div class="mainpopup__input">
+                        <input id="txtAdm" type="checkbox" name="adm" class="mainpopup__descr mainpopup__descr-check" {% if changedUser.roles[0] == 'ROLE_ADMIN'%}checked{% endif %} />
+                        <label for="txtAdm" class="mainpopup__title">ADM</label>
+                        <input type="hidden" id="userId" name="userId" value="{{ changedUser.id }}">
+                    </div>
+                    <div class="mainpopup__buttons">
+                        <div class="mainpopup__otherbutton">
+                            <a href="{{ path('app_admin') }}" class="mainpopup__link">ОТМЕНА</a>
+                        </div>
+                        <div class="mainpopup__button">
+                            <button type="submit" class="mainpopup__submit">OK</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

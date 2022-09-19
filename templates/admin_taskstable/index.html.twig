@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Консоль администратора - обзор задач{% endblock %}
+{# {% if is_granted('IS_AUTHENTICATED_FULLY') %} #}
+{% block popuptask %}
+{% if mainpopup != '' %}
+    {{ include(mainpopup) }}
+{% endif %}
+{% endblock %}
+{% block header %}
+<header class="header">
+    <div class="container">
+        <div class="header__block">
+            <div class="header__left">
+                <div class="user">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    Режим администратора - {{ app.user.uname }}
+                    {% endif %}
+                </div>
+                <ul class="items-count">
+                    <li class="items-count__item">
+                        Зарегистрировано пользователей: <strong>{{ countAllUsers }}</strong>
+                    </li>
+                    <li class="items-count__item">
+                        Всего активных задач: 
+                            <strong>{{ countActiveTasks }}</strong>
+                        
+                    </li>
+                    <li class="items-count__item">
+                        Всего приближается Deadline: 
+                            <strong>{{ countDeadlineTasks }}</strong>
+                        
+                    </li>
+                </ul>
+            </div>
+            <div class="header__right"><a href="/logout" class="logout">LogOut</a>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+{% block functions %}
+<div class="userdisplay">
+    <div class="userdisplay__title">ПОЛЬЗОВАТЕЛЬ:</div>
+    <div class="userdisplay__name">{{ editableUserObject.uname }}</div>
+    <div class="userdisplay__func">
+        <a href="{{ path('app_admin_taskstable', {userEditId: editableUserObject.id, popuptask: 'adminchangeuser'}) }}" class="userdisplay__button">Изменить</a>
+
+
+        {% if editableUserObject.deleted == 1 %}
+            
+        
+            <a href="{{ path('app_admin_taskstable', {userEditId: editableUserObject.id, popuptask: 'adminrecoveruser'}) }}" class="userdisplay__button">Восстановить</a>
+        {% else %}
+
+            <a href="{{ path('app_admin_taskstable', {userEditId: editableUserObject.id, popuptask: 'admindeleteuser'}) }}" class="userdisplay__button">Удалить</a>
+        {% endif %}
+
+        <!-- <a href="<?= $_SERVER['REQUEST_URI'] ?>?popuptask=deleteuser" class="userdisplay__button">Удалить</a> -->
+    </div>
+</div>
+
+<div class="functions">
+    <div class="functions__create">
+        <a href="{{ path('app_admin_taskstable', {popuptask: 'admincreate'}) }}"
+            class="functions__button functions__button-blue">Создать</a>
+    </div>
+    <div class="functions__filter">
+        <a href="{{ path('admintasksfilter', {tasksFilterChange: 'all' }) }}"
+            class="functions__button functions__button-grey {% if tasksFilter == 'all' %} functions__button-greyactive {% endif %}">Все</a>
+        <a href="{{ path('admintasksfilter', {tasksFilterChange: 'active' }) }}"
+            class="functions__button functions__button-grey {% if tasksFilter == 'active' %} functions__button-greyactive {% endif %}">Актуальные</a>
+        <a href="{{ path('admintasksfilter', {tasksFilterChange: 'close' }) }}"
+            class="functions__button functions__button-grey {% if tasksFilter == 'close' %} functions__button-greyactive {% endif %}">Закрытые</a>
+    </div>
+        <div class="functions__filter">
+        <a href="{{ path('app_admin') }}" class="functions__button functions__button-grey functions__button-grey-back">К списку пользователей</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block checktable %}
+
+{{ include('admin_taskstable/_checktable.html.twig') }}
+{% endblock %}
+{# {% endif %} #}
+    {% block javascripts %}
+    <script type="text/javascript" src="/js/script.js"></script>
+    {% endblock %}

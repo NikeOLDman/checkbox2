@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Создание пользователя{% endblock %}
+
+{% block body %}
+<div class="mainpopup-wrapper">
+    <div class="mainpopup-left"></div>
+    <div class="mainpopup-right">
+        <div class="mainpopup">
+            <div class="mainpopup__header">Регистрация_</div>
+            <div class="mainpopup__form">
+                {{ form_start(registrationForm) }}
+                <div class="mainpopup__input">
+                    {{ form_row(registrationForm.username, {'attr': {'class': 'mainpopup__descr'}}) }}
+                </div>
+                <div class="mainpopup__input">
+                {{ form_row(registrationForm.plainPassword, {'attr': {'class': 'mainpopup__descr'}}) }}
+                </div>
+                <div class="mainpopup__input">
+                {{ form_row(registrationForm.uname, {'attr': {'class': 'mainpopup__descr'}}) }}
+                </div>
+                <div class="mainpopup__buttons">
+                    <div class="mainpopup__otherbutton">
+                            <a href="{{path('login')}}" class="mainpopup__link">ОТМЕНА</a>
+                    </div>
+                <div class="mainpopup__button">
+                    <button type="submit" class="mainpopup__submit">OK</button>
+                </div>
+                </div>
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+    {% block footer %}
+    {% endblock %}

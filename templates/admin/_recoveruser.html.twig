@@ -1,0 +1,25 @@
+<div class="blockscreen"></div>
+<div class="mainpopup-wrapper">
+    <div class="mainpopup-left"></div>
+    <div class="mainpopup-right">
+        <div class="mainpopup">
+            <div class="mainpopup__header">Одумайся_</div>
+            <div class="mainpopup__form">
+                <form action="{{ path('recoveruser') }}" method="post">
+                    <div class="mainpopup__text">
+                        Уверены, что хотите восстановить пользователя?
+                    </div>
+                    <input type="hidden" id="userEditId" name="userEditId" value="{{ changedUser.id }}">
+                    <div class="mainpopup__buttons">
+                        <div class="mainpopup__otherbutton">
+                            <a href="{{ path('app_admin') }}" class="mainpopup__link">ОТМЕНА</a>
+                        </div>
+                        <div class="mainpopup__button">
+                            <button type="submit" class="mainpopup__submit">ВОССТАНОВИТЬ</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
